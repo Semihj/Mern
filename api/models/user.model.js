@@ -15,7 +15,11 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true,
         
-    }
+    },
+    avatar:{
+        type:String,
+        default:"https://pbs.twimg.com/profile_images/1693352060131897344/dgubG-Rr_200x200.jpg"
+    },
 }, {timestamps:true}
 
 );

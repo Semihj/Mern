@@ -11,8 +11,16 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailure,
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
 } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
+import Popup from "reactjs-popup";
+import 'reactjs-popup/dist/index.css';
+import Modal from '../components/Modal';
+
+
 export default function Profile() {
   const fileRef = useRef(null);
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -21,7 +29,9 @@ export default function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [openModal, setFalsepenModal] = useState(false)
   const dispatch = useDispatch();
+
 
   // firebase storage
   // allow read;
@@ -86,8 +96,32 @@ export default function Profile() {
       dispatch(updateUserFailure(error.message));
     }
   };
+
+  const handleDeleteUser =  async (e) => {
+    e.preventDefault()
+
+    try {
+      dispatch(deleteUserStart())
+
+      const res = await fetch(`api/user/delete/${currentUser._id}`, {
+
+      method:"DELETE",
+      } )
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+    dispatch(deleteUserSuccess(data))
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message))
+    }
+
+  }
+
+
   return (
-    <div className='p-3 max-w-lg mx-auto'>
+    <div className='p-3 max-w-lg mx-auto  '>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input
@@ -147,7 +181,21 @@ export default function Profile() {
         </button>
       </form>
       <div className='flex justify-between mt-5'>
-        <span className='text-red-700 cursor-pointer'>Delete account</span>
+        <span className='text-red-700 cursor-pointer self-center  '  > <Popup
+    trigger={<button className="button"> Open Modal </button>}
+    modal
+    nested
+  >
+    {close => (
+      <div className="modal   ">
+        <h2 className='text-[16px] md:text-[26px] ' >Are you sure you want to delete your account</h2>
+        <div className="flex justify-between my-10 ">
+          <button className='p-5 px-10 bg-red-600 rounded-lg' onClick={handleDeleteUser} >Yes</button>
+          <button className='p-5 px-10 bg-green-500 rounded-lg ' onClick={() => close() } >No</button>
+        </div>
+      </div>
+    )}
+  </Popup> </span>
         <span className='text-red-700 cursor-pointer'>Sign out</span>
       </div>
 

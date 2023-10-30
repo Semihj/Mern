@@ -14,11 +14,15 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
+  signOutUserStart,
+  signOutUserFailure,
+  signOutUserSuccess,
 } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
 import Modal from '../components/Modal';
+import { errorHandler } from '../../../api/utils/error';
 
 
 export default function Profile() {
@@ -120,6 +124,26 @@ export default function Profile() {
   }
 
 
+  const handleSignOut = async (e) => {
+    e.preventDefault();
+    
+    try {
+     dispatch(signOutUserStart());
+      const res = await fetch("/api/auth/signout")
+      const data = await res.json();
+
+      if(data.success === false ) {
+        dispatch(deleteUserFailure(data.message))
+        return;
+      }
+      dispatch(deleteUserSuccess(data))
+    } catch (error) {
+      dispatch(deleteUserFailure(data.message))
+    }
+
+
+  }
+
   return (
     <div className='p-3 max-w-lg mx-auto  '>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -196,7 +220,7 @@ export default function Profile() {
       </div>
     )}
   </Popup> </span>
-        <span className='text-red-700 cursor-pointer'>Sign out</span>
+        <span className='text-red-700 cursor-pointer' onClick={handleSignOut} >Sign out</span>
       </div>
 
       <p className='text-red-700 mt-5'>{error ? error : ''}</p>

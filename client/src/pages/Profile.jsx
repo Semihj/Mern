@@ -34,10 +34,9 @@ export default function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
-  const [openModal, setFalsepenModal] = useState(false)
   const dispatch = useDispatch();
-
-
+  
+  
   // firebase storage
   // allow read;
   // allow write: if

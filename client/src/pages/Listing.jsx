@@ -13,29 +13,20 @@ import {
   FaParking,
   FaShare,
 } from 'react-icons/fa';
-<<<<<<< HEAD
+
 import Contact from '../components/Contact';
 import {useSelector} from "react-redux";
-=======
-import {useSelector} from "react-redux";
-import Contact from '../components/Contact';
->>>>>>> 49c839a8b245e6f35205a30f25eb5ce0cbda74f6
+
+
 export default function Listing() {
   SwiperCore.use([Navigation])
  const params = useParams();
  const [listing, setListing] = useState(null);
  const [loading, setLoading] = useState(true);
  const [error,setError] = useState(false);
-<<<<<<< HEAD
- const [copied, setCopied] = useState(false);
- const [contact, setContact] = useState(false);
- const {currentUser} = useSelector((state) => state.user );
- 
-=======
  const [copied, setCopied] = useState(false)
  const [contact, setContact] = useState(false)
  const { currentUser } = useSelector((state) => state.user);
->>>>>>> 49c839a8b245e6f35205a30f25eb5ce0cbda74f6
 
  useEffect(() => {
     const fetchListing = async () => {
@@ -60,12 +51,10 @@ export default function Listing() {
     }
     fetchListing();
  }, [params.listingId])
-<<<<<<< HEAD
+
  
-=======
 
 
->>>>>>> 49c839a8b245e6f35205a30f25eb5ce0cbda74f6
   return (
      <main className="">
     { loading && <p className="text-center my-7 text-2xl  " >Loading...</p> }
@@ -144,15 +133,15 @@ export default function Listing() {
          </ul>
          {currentUser && listing.userRef !== currentUser._id && !contact && (
 
-<<<<<<< HEAD
+
 
 <button onClick={() => setContact(true) } className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-90 p-3 ' >Contact Landlord</button>
 ) } {contact && <Contact listing={listing} /> }
-=======
+
         
           <button onClick={() => setContact(true) } className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-90 p-3 ' >Contact Landlord</button>
-       ) } {contact && <Contact listing={listing} /> }
->>>>>>> 49c839a8b245e6f35205a30f25eb5ce0cbda74f6
+        {contact && <Contact listing={listing} /> }
+
        </div>
         
        </div>

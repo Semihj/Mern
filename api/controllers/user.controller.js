@@ -18,7 +18,7 @@ export const updateUser = async (req,res,next) => {
         }
         const updateUser = await User.findByIdAndUpdate(req.params.id,{
             $set:{
-                  username:req.body.username,
+                username:req.body.username,
                 email:req.body.email,
                 password:req.body.password,
                 avatar:req.body.avatar,
@@ -61,7 +61,6 @@ export const getUserListings = async (req,res,next) => {
 
 }
 export const getUser = async (req,res,next) => {
-<<<<<<< HEAD
 
     try {  
        const user = await User.findById(req.params.id);
@@ -72,7 +71,7 @@ export const getUser = async (req,res,next) => {
   } catch (error) {
       next(error)
   }
-=======
+
     
       try {  
          const user = await User.findById(req.params.id);
@@ -83,5 +82,4 @@ export const getUser = async (req,res,next) => {
     } catch (error) {
         next(error)
     }
->>>>>>> 49c839a8b245e6f35205a30f25eb5ce0cbda74f6
 }
